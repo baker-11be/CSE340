@@ -3,14 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Find meaningful ways to serve your community with the CSE 340 Service Network.">
+    <title><%= title %> | CSE 340 Service Network</title>
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/organizations">Organizations</a></li>
-            <li><a href="/projects">Projects</a></li>
-        </ul>
-    </nav>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+        <a class="brand" href="/" aria-label="CSE 340 Service Network home">
+            <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                <path d="M24 43S5 31.5 5 17.5A11.5 11.5 0 0 1 24 9.2a11.5 11.5 0 0 1 19 8.3C43 31.5 24 43 24 43Z" />
+                <path d="M24 34s-11-6.7-11-15a6.4 6.4 0 0 1 11-4.4A6.4 6.4 0 0 1 35 19c0 8.3-11 15-11 15Z" />
+            </svg>
+            <span class="brand-copy">
+                <span class="brand-name">CSE 340</span>
+                <span class="brand-tagline">SERVICE NETWORK</span>
+            </span>
+        </a>
+
+        <nav class="primary-nav" aria-label="Main navigation">
+            <a href="/projects">Projects</a>
+            <a href="/organizations">Organizations</a>
+            <a href="/categories">Categories</a>
+            <a href="/#stories">Success Stories</a>
+            <a href="/#about">About Us</a>
+        </nav>
+
+        <div class="header-actions">
+            <a class="sign-in-link" href="/#get-involved">Sign In / Register</a>
+            <span class="language-label" aria-label="Language: English">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M3.5 12h17M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18" />
+                </svg>
+            </span>
+        </div>
+    </header>

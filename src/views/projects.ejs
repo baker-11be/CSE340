@@ -1,11 +1,54 @@
 <%- include('partials/header', { title }) %>
-<main>
-    <h1><%= title %></h1>
-    <h2>Upcoming Service Projects</h2>
-    <ul>
-        <li>Park Cleanup - Join us to clean up local parks and make them beautiful!</li>
-        <li>Food Drive - Help collect and distribute food to those in need.</li>
-        <li>Community Tutoring - Volunteer to tutor students in various subjects.</li>
-    </ul>
+<main id="main-content">
+    <section class="page-hero">
+        <div class="content-width">
+            <p class="eyebrow">Make your time matter</p>
+            <h1>Good things are<br>happening nearby.</h1>
+            <p>Find a hands-on way to help and make a difference alongside your neighbors.</p>
+        </div>
+    </section>
+    <section class="section section-muted">
+        <div class="content-width">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Ways to serve</p>
+                    <h2>Upcoming service projects</h2>
+                </div>
+                <span class="results-note">3 community opportunities</span>
+            </div>
+            <div class="project-list">
+                <article class="project-card">
+                    <div class="project-symbol project-symbol-teal" aria-hidden="true">✿</div>
+                    <div class="project-details">
+                        <p class="card-category">Neighborhood · Outdoors</p>
+                        <h3>Park Cleanup Day</h3>
+                        <p>Help pick up litter, freshen garden beds, and make our neighborhood park a welcoming place for everyone.</p>
+                        <div class="project-meta">Contact the organization for upcoming dates and details.</div>
+                    </div>
+                    <a class="button button-outline" href="mailto:hello@unityserve.org?subject=Park%20Cleanup%20Day">Get involved <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="project-card">
+                    <div class="project-symbol project-symbol-orange" aria-hidden="true">♡</div>
+                    <div class="project-details">
+                        <p class="card-category">Food access · Families</p>
+                        <h3>Community Food Drive</h3>
+                        <p>Sort donations and help pack grocery boxes for local families. All experience levels are welcome.</p>
+                        <div class="project-meta">Contact the organization for upcoming dates and details.</div>
+                    </div>
+                    <a class="button button-outline" href="mailto:contact@greenharvest.org?subject=Community%20Food%20Drive">Get involved <span aria-hidden="true">→</span></a>
+                </article>
+                <article class="project-card">
+                    <div class="project-symbol project-symbol-green" aria-hidden="true">✳</div>
+                    <div class="project-details">
+                        <p class="card-category">Education · Youth</p>
+                        <h3>Community Tutoring</h3>
+                        <p>Encourage local students with homework help and a little one-on-one time in a friendly setting.</p>
+                        <div class="project-meta">Contact the organization for upcoming dates and details.</div>
+                    </div>
+                    <a class="button button-outline" href="mailto:info@brightfuture.org?subject=Community%20Tutoring">Get involved <span aria-hidden="true">→</span></a>
+                </article>
+            </div>
+        </div>
+    </section>
 </main>
 <%- include('partials/footer') %>

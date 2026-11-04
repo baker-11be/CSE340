@@ -1,5 +1,23 @@
-    <footer>
-        <p>&copy; <%= new Date().getFullYear() %> CSE 340 Service Network.</p>
+    <footer class="site-footer">
+        <div class="content-width footer-content">
+            <a class="brand footer-brand" href="/" aria-label="CSE 340 Service Network home">
+                <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                    <path d="M24 43S5 31.5 5 17.5A11.5 11.5 0 0 1 24 9.2a11.5 11.5 0 0 1 19 8.3C43 31.5 24 43 24 43Z" />
+                    <path d="M24 34s-11-6.7-11-15a6.4 6.4 0 0 1 11-4.4A6.4 6.4 0 0 1 35 19c0 8.3-11 15-11 15Z" />
+                </svg>
+                <span class="brand-copy">
+                    <span class="brand-name">CSE 340</span>
+                    <span class="brand-tagline">SERVICE NETWORK</span>
+                </span>
+            </a>
+            <nav class="footer-nav" aria-label="Footer navigation">
+                <a href="/projects">Projects</a>
+                <a href="/organizations">Organizations</a>
+                <a href="/categories">Categories</a>
+                <a href="/#about">About us</a>
+            </nav>
+            <p class="copyright">&copy; <%= new Date().getFullYear() %> CSE 340 Service Network</p>
+        </div>
     </footer>
 </body>
 </html>
