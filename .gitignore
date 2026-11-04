@@ -52,3 +52,69 @@ m4/lt~obsolete.m4
 # can automatically generate from config.status script
 # (which is called by configure script))
 Makefile
+
+# Core project and build output
+/.build/
+/build/
+/bin/
+/obj/
+/out/
+/dist/
+/target/
+/coverage/
+/.coverage
+*.class
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+
+# Language and dependency caches
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+ENV/
+node_modules/
+.npm/
+.pnpm-store/
+.parcel-cache/
+.next/
+.nuxt/
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+coverage.xml
+
+# Editors and IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs and local state
+*.log
+*.sqlite3
+*.pid
+.env
+.env.*
+local_settings.py
+
+# Generic generated files
+*.tmp
+*.temp
+*.bak
+*.rej
+*.orig
