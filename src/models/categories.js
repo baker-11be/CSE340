@@ -2,8 +2,16 @@ import db from './db.js';
 
 const getAllCategories = async () => {
     const query = `
-        SELECT category_id, name
+        SELECT name
         FROM public.category
+        UNION
+        SELECT required.name
+        FROM (VALUES
+            ('Environmental'),
+            ('Educational'),
+            ('Community Service'),
+            ('Health and Wellness')
+        ) AS required(name)
         ORDER BY name;
     `;
 

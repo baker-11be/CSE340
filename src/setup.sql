@@ -73,6 +73,9 @@ INSERT INTO category (name)
 SELECT sample.name
 FROM (VALUES
     ('Environmental'),
+    ('Educational'),
+    ('Community Service'),
+    ('Health and Wellness'),
     ('Education & Youth'),
     ('Community Development'),
     ('Food Security'),

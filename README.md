@@ -7,8 +7,9 @@ The CSE 340 Service Network helps people discover local volunteer projects and c
 Requires Node.js.
 
 1. Install dependencies with `npm install`.
-2. Start the development server with `npm run dev`.
-3. Open http://127.0.0.1:3000. The site also serves `/organizations`, `/projects`, and `/categories`.
+2. Set `DB_URL` in the ignored `.env` file to your PostgreSQL connection string and apply `src/setup.sql` to that database. The server loads `.env` automatically for local development.
+3. Start the development server with `npm run dev`.
+4. Open http://127.0.0.1:3000. The site also serves `/organizations`, `/projects`, and `/categories`.
 
 Use `npm start` to run the server without Nodemon. The app uses `PORT` and `NODE_ENV` environment variables when provided.
 
@@ -16,4 +17,4 @@ Pages are rendered from EJS templates in `src/views/`, with shared header and fo
 
 ## Deploy to Render
 
-The `render.yaml` Blueprint configures a Node.js web service with `npm ci` and `npm start`. In Render, create a new Blueprint from this GitHub repository and apply the `render.yaml` configuration. Render will provide the public service URL and set its own `PORT`; do not commit `.env` or other secrets.
+The `render.yaml` Blueprint configures a Node.js web service with `npm ci` and `npm start`. In Render, create a new Blueprint from this GitHub repository and apply the `render.yaml` configuration. Configure `DB_URL` in the Render service's environment settings and ensure its PostgreSQL database has `src/setup.sql` applied. Render will provide the public service URL and set its own `PORT`; do not commit `.env` or other secrets.

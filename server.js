@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -18,7 +19,7 @@ app.use(express.static(path.join(directoryName, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(directoryName, 'src', 'views'));
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   res.render('home', { title: 'Home' });
 });
 
