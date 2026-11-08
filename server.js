@@ -3,6 +3,8 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { testConnection } from './src/models/db.js';
 import { getAllOrganizations } from './src/models/organizations.js';
+import { getAllProjects } from './src/models/projects.js';
+import { getAllCategories } from './src/models/categories.js';
 
 const nodeEnv = process.env.NODE_ENV?.toLowerCase() || 'production';
 const port = process.env.PORT || 3000;
@@ -25,12 +27,22 @@ app.get('/organizations', async (req, res) => {
   res.render('organizations', { title: 'Our Partner Organizations', organizations });
 });
 
-app.get('/projects', (req, res) => {
-  res.render('projects', { title: 'Service Projects' });
+app.get('/projects', async (req, res) => {
+  const projects = await getAllProjects();
+  res.render('projects', { title: 'Service Projects', projects });
 });
 
-app.get('/categories', (req, res) => {
-  res.render('categories', { title: 'Service Project Categories' });
+app.get('/categories', async (req, res) => {
+  const categories = await getAllCategories();
+  res.render('categories', { title: 'Service Project Categories', categories });
+});
+
+app.use((error, req, res, next) => {
+    console.error(`Request failed for ${req.method} ${req.path}:`, error);
+    if (res.headersSent) {
+        return next(error);
+    }
+    res.status(500).send('Unable to load this page right now.');
 });
 
 app.listen(port, async () => {

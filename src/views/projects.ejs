@@ -14,39 +14,25 @@
                     <p class="eyebrow">Ways to serve</p>
                     <h2>Upcoming service projects</h2>
                 </div>
-                <span class="results-note">3 community opportunities</span>
+                <span class="results-note"><%= projects.length %> community opportunities</span>
             </div>
             <div class="project-list">
-                <article class="project-card">
-                    <div class="project-symbol project-symbol-teal" aria-hidden="true">✿</div>
-                    <div class="project-details">
-                        <p class="card-category">Neighborhood · Outdoors</p>
-                        <h3>Park Cleanup Day</h3>
-                        <p>Help pick up litter, freshen garden beds, and make our neighborhood park a welcoming place for everyone.</p>
-                        <div class="project-meta">Contact the organization for upcoming dates and details.</div>
-                    </div>
-                    <a class="button button-outline" href="mailto:hello@unityserve.org?subject=Park%20Cleanup%20Day">Get involved <span aria-hidden="true">→</span></a>
-                </article>
-                <article class="project-card">
-                    <div class="project-symbol project-symbol-orange" aria-hidden="true">♡</div>
-                    <div class="project-details">
-                        <p class="card-category">Food access · Families</p>
-                        <h3>Community Food Drive</h3>
-                        <p>Sort donations and help pack grocery boxes for local families. All experience levels are welcome.</p>
-                        <div class="project-meta">Contact the organization for upcoming dates and details.</div>
-                    </div>
-                    <a class="button button-outline" href="mailto:contact@greenharvest.org?subject=Community%20Food%20Drive">Get involved <span aria-hidden="true">→</span></a>
-                </article>
-                <article class="project-card">
-                    <div class="project-symbol project-symbol-green" aria-hidden="true">✳</div>
-                    <div class="project-details">
-                        <p class="card-category">Education · Youth</p>
-                        <h3>Community Tutoring</h3>
-                        <p>Encourage local students with homework help and a little one-on-one time in a friendly setting.</p>
-                        <div class="project-meta">Contact the organization for upcoming dates and details.</div>
-                    </div>
-                    <a class="button button-outline" href="mailto:info@brightfuture.org?subject=Community%20Tutoring">Get involved <span aria-hidden="true">→</span></a>
-                </article>
+                <% if (projects.length > 0) { %>
+                    <% projects.forEach((project, index) => { %>
+                        <article class="project-card">
+                            <div class="project-symbol project-symbol-<%= ['teal', 'orange', 'green'][index % 3] %>" aria-hidden="true"><%= ['✿', '♡', '✳'][index % 3] %></div>
+                            <div class="project-details">
+                                <p class="card-category"><%= project.category_names || 'Community service' %></p>
+                                <h3><%= project.project_date_display %>: <%= project.title %> <em>(<%= project.organization_name %>)</em></h3>
+                                <p><%= project.description %></p>
+                                <div class="project-meta"><span>Location: <%= project.location %></span></div>
+                            </div>
+                            <a class="button button-outline" href="mailto:<%= project.organization_contact_email %>?subject=<%= encodeURIComponent(project.title) %>">Get involved <span aria-hidden="true">→</span></a>
+                        </article>
+                    <% }); %>
+                <% } else { %>
+                    <p>No service projects are available right now.</p>
+                <% } %>
             </div>
         </div>
     </section>
