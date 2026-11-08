@@ -17,33 +17,17 @@
                 <a class="text-link" href="/projects">Explore projects <span aria-hidden="true">→</span></a>
             </div>
             <div class="organization-grid">
-                <article class="organization-card">
-                    <img class="organization-logo" src="/images/brightfuture-logo.svg" alt="" aria-hidden="true">
-                    <div>
-                        <p class="card-category">Youth &amp; education</p>
-                        <h3>BrightFuture Builders</h3>
-                        <p>Helping young people discover their strengths through mentoring, learning, and community support.</p>
-                        <a class="card-link" href="mailto:info@brightfuture.org">info@brightfuture.org <span aria-hidden="true">↗</span></a>
-                    </div>
-                </article>
-                <article class="organization-card">
-                    <img class="organization-logo" src="/images/greenharvest-logo.svg" alt="" aria-hidden="true">
-                    <div>
-                        <p class="card-category">Food &amp; environment</p>
-                        <h3>GreenHarvest Growers</h3>
-                        <p>Growing fresh food and bringing neighbors together to care for shared green spaces.</p>
-                        <a class="card-link" href="mailto:contact@greenharvest.org">contact@greenharvest.org <span aria-hidden="true">↗</span></a>
-                    </div>
-                </article>
-                <article class="organization-card">
-                    <img class="organization-logo" src="/images/unityserve-logo.svg" alt="" aria-hidden="true">
-                    <div>
-                        <p class="card-category">Community care</p>
-                        <h3>UnityServe Volunteers</h3>
-                        <p>Connecting caring people with practical ways to support families and neighbors.</p>
-                        <a class="card-link" href="mailto:hello@unityserve.org">hello@unityserve.org <span aria-hidden="true">↗</span></a>
-                    </div>
-                </article>
+                <% organizations.forEach(organization => { %>
+                    <article class="organization-card">
+                        <img class="organization-logo" src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo">
+                        <div>
+                            <p class="card-category">Community partner</p>
+                            <h3><%= organization.name %></h3>
+                            <p><%= organization.description %></p>
+                            <a class="card-link" href="mailto:<%= organization.contact_email %>"><%= organization.contact_email %> <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </article>
+                <% }); %>
             </div>
         </div>
     </section>
