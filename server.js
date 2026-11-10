@@ -24,13 +24,50 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/organizations', async (req, res) => {
-  const organizations = await getAllOrganizations();
-  res.render('organizations', { title: 'Our Partner Organizations', organizations });
+  const searchTerm = typeof req.query.search === 'string' ? req.query.search.trim() : '';
+  const allOrganizations = await getAllOrganizations();
+  const organizations = allOrganizations
+    .filter((organization) => {
+      const searchableText = `${organization.name} ${organization.description}`.toLocaleLowerCase();
+      return searchableText.includes(searchTerm.toLocaleLowerCase());
+    })
+    .sort((first, second) => first.name.localeCompare(second.name));
+
+  res.render('organizations', {
+    title: 'Find an Organization',
+    organizations,
+    searchTerm
+  });
 });
 
 app.get('/projects', async (req, res) => {
-  const projects = await getAllProjects();
-  res.render('projects', { title: 'Service Projects', projects });
+  const searchTerm = typeof req.query.search === 'string' ? req.query.search.trim() : '';
+  const selectedCategory = typeof req.query.category === 'string' ? req.query.category : '';
+  const allProjects = await getAllProjects();
+  const categories = await getAllCategories();
+  const normalizedSearch = searchTerm.toLocaleLowerCase();
+  const projects = allProjects.filter((project) => {
+    const searchableText = [
+      project.title,
+      project.description,
+      project.location,
+      project.organization_name,
+      project.category_names
+    ].join(' ').toLocaleLowerCase();
+    const matchesSearch = searchableText.includes(normalizedSearch);
+    const projectCategories = (project.category_names || '').split(', ');
+    const matchesCategory = !selectedCategory || projectCategories.includes(selectedCategory);
+
+    return matchesSearch && matchesCategory;
+  });
+
+  res.render('projects', {
+    title: 'Find a Project',
+    projects,
+    categories,
+    searchTerm,
+    selectedCategory
+  });
 });
 
 app.get('/categories', async (req, res) => {

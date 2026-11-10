@@ -1,6 +1,6 @@
-# CSE 340 Service Network
+# BakerSERVE
 
-The CSE 340 Service Network helps people discover local volunteer projects and community organizations. The responsive site includes a photo-led home page, upcoming projects, partner organizations, and service project categories.
+BakerSERVE helps people discover local volunteer projects and community organizations. The responsive site includes a photo-led home page, searchable organization listings, project filters, and service project categories.
 
 ## Run the application
 
