@@ -1,118 +1,166 @@
--- ========================================
--- Organization Table
--- ========================================
+-- ============================================================
+-- src/setup.sql
+-- Safe to run repeatedly. Run top to bottom as one script.
+-- ============================================================
 
-BEGIN;
+-- ------------------------------------------------------------
+-- 0. DROP (children first, parents last)
+-- ------------------------------------------------------------
+DROP TABLE IF EXISTS project_categories;
+DROP TABLE IF EXISTS service_projects;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS organizations;
 
-CREATE TABLE IF NOT EXISTS organization (
+-- ------------------------------------------------------------
+-- 1. CREATE parents (no foreign keys)
+-- ------------------------------------------------------------
+CREATE TABLE organizations (
     organization_id SERIAL PRIMARY KEY,
-    name VARCHAR(150) NOT NULL,
-    description TEXT NOT NULL,
-    contact_email VARCHAR(255) NOT NULL,
-    logo_filename VARCHAR(255) NOT NULL
+    name            VARCHAR(150) NOT NULL UNIQUE,
+    description     TEXT         NOT NULL,
+    contact_email   VARCHAR(255) NOT NULL,
+    logo_filename   VARCHAR(255) NOT NULL
 );
 
-INSERT INTO organization (name, description, contact_email, logo_filename)
-SELECT sample.name, sample.description, sample.contact_email, sample.logo_filename
-FROM (VALUES
-    ('BrightFuture Builders', 'A nonprofit focused on improving community infrastructure through sustainable construction projects.', 'info@brightfuturebuilders.org', 'brightfuture-logo.svg'),
-    ('GreenHarvest Growers', 'An urban farming collective promoting food sustainability and education in local neighborhoods.', 'contact@greenharvest.org', 'greenharvest-logo.svg'),
-    ('UnityServe Volunteers', 'A volunteer coordination group supporting local charities and service initiatives.', 'hello@unityserve.org', 'unityserve-logo.svg')
-) AS sample(name, description, contact_email, logo_filename)
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM organization existing
-    WHERE existing.name = sample.name
-);
-
-UPDATE organization
-SET logo_filename = CASE name
-    WHEN 'BrightFuture Builders' THEN 'brightfuture-logo.svg'
-    WHEN 'GreenHarvest Growers' THEN 'greenharvest-logo.svg'
-    WHEN 'UnityServe Volunteers' THEN 'unityserve-logo.svg'
-END
-WHERE (name = 'BrightFuture Builders' AND logo_filename <> 'brightfuture-logo.svg')
-   OR (name = 'GreenHarvest Growers' AND logo_filename <> 'greenharvest-logo.svg')
-   OR (name = 'UnityServe Volunteers' AND logo_filename <> 'unityserve-logo.svg');
-
-CREATE TABLE IF NOT EXISTS project (
-    project_id SERIAL PRIMARY KEY,
-    organization_id INTEGER NOT NULL REFERENCES organization(organization_id),
-    title VARCHAR(150) NOT NULL,
-    description TEXT NOT NULL,
-    location VARCHAR(150) NOT NULL,
-    project_date DATE NOT NULL,
-    UNIQUE (organization_id, title)
-);
-
-CREATE TABLE IF NOT EXISTS category (
+CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL UNIQUE
+    name        VARCHAR(100) NOT NULL UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS project_category (
-    project_id INTEGER NOT NULL REFERENCES project(project_id) ON DELETE CASCADE,
-    category_id INTEGER NOT NULL REFERENCES category(category_id) ON DELETE CASCADE,
-    PRIMARY KEY (project_id, category_id)
+-- ------------------------------------------------------------
+-- 2. CREATE children (reference parents)
+-- ------------------------------------------------------------
+CREATE TABLE service_projects (
+    project_id      SERIAL PRIMARY KEY,
+    organization_id INT          NOT NULL,
+    title           VARCHAR(255) NOT NULL,
+    description     TEXT         NOT NULL,
+    location        VARCHAR(255) NOT NULL,
+    project_date    DATE         NOT NULL,
+    CONSTRAINT fk_organization
+        FOREIGN KEY (organization_id)
+        REFERENCES organizations(organization_id)
+        ON DELETE CASCADE
 );
 
-INSERT INTO category (name)
-SELECT sample.name
-FROM (VALUES
-    ('Environmental'),
-    ('Educational'),
-    ('Community Service'),
-    ('Health and Wellness')
-) AS sample(name)
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM category existing
-    WHERE existing.name = sample.name
+CREATE TABLE project_categories (
+    project_id  INT NOT NULL,
+    category_id INT NOT NULL,
+    PRIMARY KEY (project_id, category_id),
+    FOREIGN KEY (project_id)  REFERENCES service_projects(project_id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id)      ON DELETE CASCADE
 );
 
-INSERT INTO project (organization_id, title, description, location, project_date)
-SELECT organization.organization_id, sample.title, sample.description, sample.location, sample.project_date
-FROM (VALUES
-    ('BrightFuture Builders', 'Community Center Renovation', 'Help renovate a shared community space with sustainable materials and accessible facilities.', 'Downtown', DATE '2027-01-16'),
-    ('BrightFuture Builders', 'Greenway Cleanup and Repair', 'Remove litter and make small repairs along a well-used neighborhood walking path.', 'River District', DATE '2027-03-20'),
-    ('GreenHarvest Growers', 'Urban Garden Workshop', 'Teach neighbors how to grow vegetables using sustainable gardening practices.', 'East Side', DATE '2027-01-23'),
-    ('GreenHarvest Growers', 'Healthy Cooking and Nutrition Class', 'Prepare simple meals and share practical nutrition tips using seasonal produce.', 'Community Kitchen', DATE '2027-03-27'),
-    ('UnityServe Volunteers', 'Community Food Drive', 'Collect, sort, and pack shelf-stable groceries for households experiencing food insecurity.', 'Citywide', DATE '2027-01-30'),
-    ('UnityServe Volunteers', 'Senior Wellness Check-In', 'Visit older neighbors and connect them with helpful community resources.', 'North End', DATE '2027-02-27')
-) AS sample(organization_name, title, description, location, project_date)
-JOIN organization
-    ON organization.name = sample.organization_name
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM project existing
-    WHERE existing.organization_id = organization.organization_id
-      AND existing.title = sample.title
-);
+-- ------------------------------------------------------------
+-- 3. INSERT organizations (parent of service_projects)
+-- ------------------------------------------------------------
+INSERT INTO organizations (name, description, contact_email, logo_filename) VALUES
+('BrightFuture Builders',
+ 'A nonprofit focused on improving community infrastructure through sustainable construction projects.',
+ 'info@brightfuturebuilders.org', 'brightfuture-logo.svg'),
+('GreenHarvest Growers',
+ 'An urban farming collective promoting food sustainability and education in local neighborhoods.',
+ 'contact@greenharvest.org', 'greenharvest-logo.svg'),
+('UnityServe Volunteers',
+ 'A volunteer coordination group supporting local charities and service initiatives.',
+ 'hello@unityserve.org', 'unityserve-logo.svg')
+ON CONFLICT (name) DO NOTHING;
 
-INSERT INTO project_category (project_id, category_id)
-SELECT project.project_id, category.category_id
-FROM (VALUES
-    ('BrightFuture Builders', 'Community Center Renovation', 'Community Service'),
-    ('BrightFuture Builders', 'Greenway Cleanup and Repair', 'Environmental'),
-    ('GreenHarvest Growers', 'Urban Garden Workshop', 'Environmental'),
-    ('GreenHarvest Growers', 'Urban Garden Workshop', 'Educational'),
-    ('GreenHarvest Growers', 'Healthy Cooking and Nutrition Class', 'Health and Wellness'),
-    ('GreenHarvest Growers', 'Healthy Cooking and Nutrition Class', 'Educational'),
-    ('UnityServe Volunteers', 'Community Food Drive', 'Community Service'),
-    ('UnityServe Volunteers', 'Senior Wellness Check-In', 'Health and Wellness')
-) AS sample(organization_name, project_title, category_name)
-JOIN organization
-    ON organization.name = sample.organization_name
-JOIN project
-    ON project.organization_id = organization.organization_id
-   AND project.title = sample.project_title
-JOIN category
-    ON category.name = sample.category_name
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM project_category existing
-    WHERE existing.project_id = project.project_id
-      AND existing.category_id = category.category_id
-);
+-- ------------------------------------------------------------
+-- 4. INSERT categories (parent of project_categories)
+-- ------------------------------------------------------------
+INSERT INTO categories (name) VALUES
+('Community Service'),
+('Education'),
+('Healthcare'),
+('Environmental'),
+('Food Assistance')
+ON CONFLICT (name) DO NOTHING;
 
-COMMIT;
+-- ------------------------------------------------------------
+-- 5. INSERT service_projects (needs organizations above)
+--    Insert order defines project_id 1..15
+-- ------------------------------------------------------------
+INSERT INTO service_projects (organization_id, title, description, location, project_date) VALUES
+-- BrightFuture Builders (org 1)
+(1, 'Community Center Renovation',
+    'Help renovate a shared community space with sustainable materials and accessible facilities.',
+    'Downtown', '2027-01-16'),                                              -- project_id 1
+(1, 'Neighborhood Accessibility Improvements',
+    'Improve sidewalks, ramps, and gathering spaces so neighbors of all abilities can participate.',
+    'West Side', '2027-02-06'),                                             -- project_id 2
+(1, 'Youth Building Skills Workshop',
+    'Help young people learn practical construction, repair, and teamwork skills.',
+    'Downtown', '2027-02-20'),                                              -- project_id 3
+(1, 'Community Tool Library Launch',
+    'Prepare donated tools and organize a free lending library for neighborhood improvement projects.',
+    'North End', '2027-03-06'),                                             -- project_id 4
+(1, 'Greenway Cleanup and Repair',
+    'Remove litter and make small repairs along a well-used neighborhood walking path.',
+    'River District', '2027-03-20'),                                        -- project_id 5
+-- GreenHarvest Growers (org 2)
+(2, 'Urban Garden Workshop',
+    'Teach neighbors how to grow vegetables using sustainable gardening practices.',
+    'East Side', '2027-01-23'),                                             -- project_id 6
+(2, 'Community Seedling Distribution',
+    'Prepare and distribute vegetable seedlings to households and community gardens.',
+    'East Side', '2027-02-13'),                                             -- project_id 7
+(2, 'School Garden Mentoring',
+    'Work with students to plant and care for a productive school garden.',
+    'Central School', '2027-02-27'),                                        -- project_id 8
+(2, 'Neighborhood Harvest Day',
+    'Harvest fresh produce and share it with local food programs and community members.',
+    'East Side', '2027-03-13'),                                             -- project_id 9
+(2, 'Healthy Cooking and Nutrition Class',
+    'Prepare simple meals and share practical nutrition tips using seasonal produce.',
+    'Community Kitchen', '2027-03-27'),                                     -- project_id 10
+-- UnityServe Volunteers (org 3)
+(3, 'Community Food Drive',
+    'Collect, sort, and pack shelf-stable groceries for households experiencing food insecurity.',
+    'Citywide', '2027-01-30'),                                              -- project_id 11
+(3, 'Park Cleanup Day',
+    'Pick up litter, refresh garden beds, and make the neighborhood park welcoming for everyone.',
+    'Maple Park', '2027-02-13'),                                            -- project_id 12
+(3, 'Senior Wellness Check-In',
+    'Visit older neighbors and connect them with helpful community resources.',
+    'North End', '2027-02-27'),                                             -- project_id 13
+(3, 'Family Resource Fair',
+    'Help local families find community services, health resources, and volunteer opportunities.',
+    'Civic Center', '2027-03-13'),                                          -- project_id 14
+(3, 'After-School Tutoring Circle',
+    'Support students with homework and reading in a welcoming after-school program.',
+    'Riverside Library', '2027-03-27');                                     -- project_id 15
+
+-- ------------------------------------------------------------
+-- 6. INSERT project_categories LAST (both parents now exist)
+--    Mappings chosen to be semantically sensible.
+-- ------------------------------------------------------------
+INSERT INTO project_categories (project_id, category_id) VALUES
+(1,  1),  -- Community Center Renovation       -> Community Service
+(2,  1),  -- Neighborhood Accessibility        -> Community Service
+(3,  2),  -- Youth Building Skills Workshop    -> Education
+(4,  1),  -- Community Tool Library Launch     -> Community Service
+(5,  4),  -- Greenway Cleanup and Repair       -> Environmental
+(6,  4),  -- Urban Garden Workshop             -> Environmental
+(7,  5),  -- Community Seedling Distribution   -> Food Assistance
+(8,  2),  -- School Garden Mentoring           -> Education
+(9,  5),  -- Neighborhood Harvest Day          -> Food Assistance
+(10, 3),  -- Healthy Cooking and Nutrition     -> Healthcare
+(11, 5),  -- Community Food Drive              -> Food Assistance
+(12, 4),  -- Park Cleanup Day                  -> Environmental
+(13, 3),  -- Senior Wellness Check-In          -> Healthcare
+(14, 1),  -- Family Resource Fair              -> Community Service
+(15, 2);  -- After-School Tutoring Circle      -> Education
+
+-- ------------------------------------------------------------
+-- 7. VERIFICATION (optional; inspect the output)
+-- ------------------------------------------------------------
+SELECT 'organizations'      AS table_name, COUNT(*) FROM organizations
+UNION ALL
+SELECT 'categories',                         COUNT(*) FROM categories
+UNION ALL
+SELECT 'service_projects',                   COUNT(*) FROM service_projects
+UNION ALL
+SELECT 'project_categories',                 COUNT(*) FROM project_categories;
+
+SELECT * FROM project_categories;
