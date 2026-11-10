@@ -4,7 +4,7 @@
   --muted: #647278;
   --teal: #008da0;
   --teal-dark: #007380;
-  --orange: #f45d42;
+  --orange: #c94831;
   --green: #39836c;
   --cream: #fffaf5;
   --soft: #f5f7f5;
@@ -237,7 +237,7 @@ a:focus-visible {
 }
 
 .button-primary:hover {
-  background: #dc4c34;
+  background: #b13d29;
 }
 
 .button-light {

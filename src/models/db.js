@@ -34,18 +34,9 @@ const pool = new Pool({
  * export a reference to the pool object. This allows us to use the same name for the
  * export regardless of whether we are in development or production mode.
  */
-let db = null;
-
-if (process.env.NODE_ENV === 'development' && process.env.ENABLE_SQL_LOGGING === 'true') {
-    /**
-     * In development mode, we wrap the pool to provide query logging.
-     * This helps with debugging by showing all executed queries in the console.
-     * 
-     * The wrapper also adds timing information to help identify slow queries
-     * and tracks the number of rows affected by each query.
-     */
-    db = {
-        async query(text, params) {
+const db = process.env.NODE_ENV === 'development' && process.env.ENABLE_SQL_LOGGING === 'true'
+    ? {
+        query: async (text, params) => {
             try {
                 const start = Date.now();
                 const res = await pool.query(text, params);
@@ -65,14 +56,11 @@ if (process.env.NODE_ENV === 'development' && process.env.ENABLE_SQL_LOGGING ===
             }
         },
 
-        async close() {
+        close: async () => {
             await pool.end();
         }
-    };
-} else {
-    // In production, export the pool directly without logging overhead
-    db = pool;
-}
+    }
+    : pool;
 
 /**
  * Tests the database connection by executing a simple query.
