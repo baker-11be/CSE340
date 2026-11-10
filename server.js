@@ -23,6 +23,14 @@ app.get('/', async (req, res) => {
   res.render('home', { title: 'Home' });
 });
 
+app.get('/about', (req, res) => {
+  res.render('about', { title: 'About Us' });
+});
+
+app.get('/success-stories', (req, res) => {
+  res.render('success-stories', { title: 'Success Stories' });
+});
+
 app.get('/organizations', async (req, res) => {
   const searchTerm = typeof req.query.search === 'string' ? req.query.search.trim() : '';
   const allOrganizations = await getAllOrganizations();

@@ -9,7 +9,7 @@ Requires Node.js.
 1. Install dependencies with `npm install`.
 2. Set `DB_URL` in the ignored `.env` file to your PostgreSQL connection string and apply `src/setup.sql` to that database. The server loads `.env` automatically for local development.
 3. Start the development server with `npm run dev`.
-4. Open http://127.0.0.1:3000. The site also serves `/organizations`, `/projects`, and `/categories`.
+4. Open http://127.0.0.1:3000. The site also serves `/projects`, `/organizations`, `/success-stories`, `/about`, and `/categories`.
 
 Use `npm start` to run the server without Nodemon. The app uses `PORT` and `NODE_ENV` environment variables when provided.
 

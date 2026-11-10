@@ -475,6 +475,18 @@ a:focus-visible {
   padding: 76px 0 82px;
 }
 
+.page-photo-banner {
+  height: clamp(180px, 30vw, 360px);
+  overflow: hidden;
+}
+
+.page-photo-banner img {
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  width: 100%;
+}
+
 .page-hero h1 {
   color: var(--ink);
   font-size: clamp(40px, 5.6vw, 62px);

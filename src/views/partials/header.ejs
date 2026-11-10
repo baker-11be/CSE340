@@ -25,10 +25,9 @@
         <nav class="primary-nav" aria-label="Main navigation">
             <a href="/" <% if (title === 'Home') { %>aria-current="page"<% } %>>Home</a>
             <a href="/projects" <% if (title === 'Find a Project') { %>aria-current="page"<% } %>>Projects</a>
-            <a href="/categories" <% if (title === 'Service Project Categories') { %>aria-current="page"<% } %>>Categories</a>
             <a href="/organizations" <% if (title === 'Find an Organization') { %>aria-current="page"<% } %>>Organizations</a>
-            <a href="/#stories">Success Stories</a>
-            <a href="/#about">About Us</a>
+            <a href="/success-stories" <% if (title === 'Success Stories') { %>aria-current="page"<% } %>>Success Stories</a>
+            <a href="/about" <% if (title === 'About Us') { %>aria-current="page"<% } %>>About Us</a>
         </nav>
 
         <div class="header-actions">
