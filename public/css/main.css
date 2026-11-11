@@ -898,6 +898,81 @@ a:focus-visible {
   margin: 0 0 16px;
 }
 
+.entity-detail {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  margin-bottom: 42px;
+  padding: clamp(22px, 4vw, 36px);
+}
+
+.entity-detail h2 {
+  color: #092f3c;
+  font-size: 24px;
+  margin: 0 0 18px;
+}
+
+.category-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+}
+
+.category-tag {
+  background: #e0f3f1;
+  border: 1px solid #b7dfda;
+  border-radius: 999px;
+  color: #075e57;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 7px 12px;
+  text-decoration: none;
+}
+
+.category-tag:hover {
+  background: #cce9e5;
+}
+
+.category-tag:focus-visible {
+  outline: 3px solid #f3a344;
+  outline-offset: 3px;
+}
+
+.detail-list {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin: 0 0 24px;
+}
+
+.detail-list dt {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.detail-list dd {
+  line-height: 1.5;
+  margin: 0;
+}
+
+.project-details h3 a,
+.project-meta a {
+  color: var(--teal-dark);
+  text-decoration: none;
+}
+
+.project-details h3 a:hover,
+.project-meta a:hover {
+  color: var(--orange);
+  text-decoration: underline;
+}
+
 .about-section {
   background: #eef4f7;
   padding: 70px 0;

@@ -25,7 +25,7 @@
             <div class="category-grid">
                 <% if (categories.length > 0) { %>
                     <% categories.forEach((category, index) => { %>
-                        <a class="category-card" href="/projects?category=<%= encodeURIComponent(category.name) %>">
+                        <a class="category-card" href="/category/<%= category.category_id %>">
                             <span class="category-number <%= ['', 'category-number-orange', 'category-number-green', 'category-number-gold'][index % 4] %>" aria-hidden="true"><%= String(index + 1).padStart(2, '0') %></span>
                             <span class="category-card-copy">
                                 <span class="category-card-title"><%= category.name %></span>

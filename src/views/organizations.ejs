@@ -30,7 +30,7 @@
                             <img class="organization-logo" src="/images/<%= organization.logo_filename %>" alt="" width="60" height="60">
                             <div>
                                 <p class="card-category">Community partner</p>
-                                <h3><%= organization.name %></h3>
+                                <h3><a href="/organization/<%= organization.organization_id %>"><%= organization.name %></a></h3>
                                 <p><%= organization.description %></p>
                                 <a class="card-link" href="mailto:<%= organization.contact_email %>">Contact organization <span aria-hidden="true">↗</span></a>
                             </div>
