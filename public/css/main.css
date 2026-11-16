@@ -1306,6 +1306,10 @@ a:focus-visible {
     grid-column: 1;
   }
 
+  .project-card.project-card-detail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .project-card > .button {
     grid-column: 2;
     justify-self: start;

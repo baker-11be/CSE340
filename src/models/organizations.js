@@ -2,7 +2,7 @@ import db from './db.js';
 
 const getAllOrganizations = async () => {
     const query = `
-        SELECT DISTINCT ON (name)
+        SELECT
             organization_id,
             name,
             description,

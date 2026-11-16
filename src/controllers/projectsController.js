@@ -1,12 +1,10 @@
-import { getCategoriesByProjectId, getProjectDetails, getUpcomingProjects } from '../models/projects.js';
+import { getAllProjects, getCategoriesByProjectId, getProjectDetails } from '../models/projects.js';
 import { getAllCategories } from '../models/categories.js';
-
-const NUMBER_OF_UPCOMING_PROJECTS = 5;
 
 const showProjects = async (req, res) => {
     const searchTerm = typeof req.query.search === 'string' ? req.query.search.trim() : '';
     const selectedCategory = typeof req.query.category === 'string' ? req.query.category : '';
-    const allProjects = await getUpcomingProjects(NUMBER_OF_UPCOMING_PROJECTS);
+    const allProjects = await getAllProjects();
     const categories = await getAllCategories();
     const normalizedSearch = searchTerm.toLocaleLowerCase();
     const projects = allProjects.filter((project) => {
@@ -25,7 +23,7 @@ const showProjects = async (req, res) => {
     });
 
     res.render('projects', {
-        title: 'Upcoming Service Projects',
+        title: 'Service Projects',
         projects,
         categories,
         searchTerm,
