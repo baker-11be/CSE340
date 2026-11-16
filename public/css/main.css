@@ -879,6 +879,10 @@ a:focus-visible {
   box-shadow: 0 2px 8px rgb(22 50 61 / 5%);
 }
 
+.project-card-detail {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .empty-state {
   background: #fff;
   border: 1px solid var(--line);
@@ -1296,6 +1300,10 @@ a:focus-visible {
 
   .project-details {
     grid-column: 2;
+  }
+
+  .project-card-detail .project-details {
+    grid-column: 1;
   }
 
   .project-card > .button {

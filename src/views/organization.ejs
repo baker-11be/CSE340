@@ -26,7 +26,7 @@
             <% if (projects.length > 0) { %>
                 <div class="project-list">
                     <% projects.forEach(project => { %>
-                        <article class="project-card">
+                        <article class="project-card project-card-detail">
                             <div class="project-details">
                                 <p class="card-category"><%= project.category_names || 'Community service' %></p>
                                 <h3><a href="/project/<%= project.project_id %>"><%= project.title %></a></h3>
