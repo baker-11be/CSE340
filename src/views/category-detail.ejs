@@ -15,7 +15,10 @@
                     <p class="eyebrow">Ways to make a difference</p>
                     <h2 id="category-projects-title">Projects in <%= category.name %></h2>
                 </div>
-                <a class="text-link" href="/categories">All categories <span aria-hidden="true">→</span></a>
+                <div>
+                    <a class="text-link" href="/edit-category/<%= category.category_id %>">Edit category</a>
+                    <a class="text-link" href="/categories">All categories <span aria-hidden="true">→</span></a>
+                </div>
             </div>
 
             <% if (projects.length > 0) { %>

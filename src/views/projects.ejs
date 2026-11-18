@@ -39,7 +39,10 @@
                         <p class="eyebrow"><%= searchTerm || selectedCategory ? 'Search results' : 'Ways to serve' %></p>
                         <h2 id="project-results-title"><%= searchTerm || selectedCategory ? 'Projects that match your search' : 'All service projects' %></h2>
                     </div>
-                    <p class="results-note"><%= projects.length %> projects</p>
+                    <div class="results-actions">
+                        <p class="results-note"><%= projects.length %> projects</p>
+                        <a class="button button-primary" href="/new-project">Add a project</a>
+                    </div>
                 </div>
 
                 <% if (projects.length > 0) { %>

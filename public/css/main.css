@@ -850,6 +850,148 @@ a:focus-visible {
   min-height: 44px;
 }
 
+.form-panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  margin: 0 auto;
+  max-width: 760px;
+  padding: clamp(22px, 4vw, 38px);
+}
+
+.form-panel h1 {
+  color: #092f3c;
+  font-size: clamp(28px, 4vw, 38px);
+  margin: 0 0 24px;
+}
+
+.form-panel h2 {
+  color: #092f3c;
+  margin: 0 0 18px;
+}
+
+.data-form {
+  display: grid;
+  gap: 20px;
+}
+
+.form-field {
+  display: grid;
+  gap: 8px;
+}
+
+.form-field label,
+.category-options legend {
+  color: #3a484e;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  background: #fff;
+  border: 1px solid #b7c8c8;
+  border-radius: 4px;
+  color: var(--ink);
+  font: inherit;
+  min-height: 46px;
+  padding: 10px 12px;
+  width: 100%;
+}
+
+.form-field textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.form-field input:focus-visible,
+.form-field textarea:focus-visible,
+.form-field select:focus-visible,
+.category-option input:focus-visible {
+  outline: 3px solid #f3a344;
+  outline-offset: 2px;
+}
+
+.field-help {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}
+
+.form-actions,
+.entity-actions,
+.results-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.form-actions .text-link,
+.entity-actions .button {
+  min-height: 44px;
+}
+
+.flash-container {
+  display: grid;
+  gap: 8px;
+  padding-bottom: 12px;
+  padding-top: 12px;
+}
+
+.flash-message {
+  border-radius: 4px;
+  margin: 0;
+  padding: 12px 16px;
+}
+
+.flash-error {
+  background: #fff0ed;
+  border: 1px solid #e4a397;
+  color: #7c281c;
+}
+
+.flash-success {
+  background: #edf7f1;
+  border: 1px solid #9dc8ad;
+  color: #245c3b;
+}
+
+.category-options {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 18px;
+}
+
+.category-option {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.category-option input {
+  accent-color: var(--teal-dark);
+  height: 18px;
+  width: 18px;
+}
+
+.category-option label {
+  cursor: pointer;
+}
+
+.category-card-wrapper {
+  display: grid;
+  gap: 10px;
+}
+
+.category-card-wrapper > .text-link {
+  justify-self: start;
+}
+
 .filter-submit {
   border-radius: 24px;
   width: 100%;

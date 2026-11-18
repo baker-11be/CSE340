@@ -1,0 +1,43 @@
+<%- include('partials/header', { title }) %>
+<main id="main-content">
+    <section class="directory-section">
+        <div class="content-width">
+            <div class="form-panel">
+                <p class="eyebrow">Create an opportunity</p>
+                <h1><%= title %></h1>
+                <form class="data-form" action="/new-project" method="POST">
+                    <div class="form-field">
+                        <label for="title">Project Title</label>
+                        <input type="text" id="title" name="title" maxlength="200" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" maxlength="999" rows="5" required></textarea>
+                    </div>
+                    <div class="form-field">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" name="location" maxlength="199" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="organizationId">Organization</label>
+                        <select id="organizationId" name="organizationId" required>
+                            <option value="">Select an organization</option>
+                            <% organizations.forEach(organization => { %>
+                                <option value="<%= organization.organization_id %>"><%= organization.name %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button class="button button-primary" type="submit">Create project</button>
+                        <a class="text-link" href="/projects">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+<%- include('partials/footer') %>

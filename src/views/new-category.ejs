@@ -1,0 +1,22 @@
+<%- include('partials/header', { title }) %>
+<main id="main-content">
+    <section class="directory-section">
+        <div class="content-width">
+            <div class="form-panel">
+                <p class="eyebrow">Explore a new cause</p>
+                <h1><%= title %></h1>
+                <form class="data-form" action="/new-category" method="POST">
+                    <div class="form-field">
+                        <label for="name">Category Name</label>
+                        <input type="text" id="name" name="name" maxlength="100" required>
+                    </div>
+                    <div class="form-actions">
+                        <button class="button button-primary" type="submit">Create category</button>
+                        <a class="text-link" href="/categories">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+<%- include('partials/footer') %>

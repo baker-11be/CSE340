@@ -1,0 +1,22 @@
+<%- include('partials/header', { title }) %>
+<main id="main-content">
+    <section class="directory-section">
+        <div class="content-width">
+            <div class="form-panel">
+                <p class="eyebrow">Update a cause</p>
+                <h1><%= title %></h1>
+                <form class="data-form" action="/edit-category/<%= categoryDetails.category_id %>" method="POST">
+                    <div class="form-field">
+                        <label for="name">Category Name</label>
+                        <input type="text" id="name" name="name" value="<%= categoryDetails.name %>" maxlength="100" required>
+                    </div>
+                    <div class="form-actions">
+                        <button class="button button-primary" type="submit">Save changes</button>
+                        <a class="text-link" href="/categories">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+<%- include('partials/footer') %>

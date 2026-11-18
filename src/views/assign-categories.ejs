@@ -1,0 +1,38 @@
+<%- include('partials/header', { title }) %>
+<main id="main-content">
+    <section class="directory-section">
+        <div class="content-width">
+            <div class="form-panel">
+                <p class="eyebrow">Project categories</p>
+                <h1><%= projectDetails.title %></h1>
+                <h2>Assign categories</h2>
+                <form class="data-form" action="/assign-categories/<%= projectId %>" method="POST">
+                    <fieldset class="category-options">
+                        <legend>Select all categories that apply</legend>
+                        <% if (categories.length > 0) { %>
+                            <% categories.forEach(category => { %>
+                                <div class="category-option">
+                                    <input
+                                        type="checkbox"
+                                        id="category-<%= category.category_id %>"
+                                        name="categoryIds"
+                                        value="<%= category.category_id %>"
+                                        <% if (assignedCategories.some(assigned => assigned.category_id === category.category_id)) { %>checked<% } %>
+                                    >
+                                    <label for="category-<%= category.category_id %>"><%= category.name %></label>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <p>No categories are available. <a href="/new-category">Create a category</a> first.</p>
+                        <% } %>
+                    </fieldset>
+                    <div class="form-actions">
+                        <button class="button button-primary" type="submit">Update categories</button>
+                        <a class="text-link" href="/project/<%= projectId %>">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+<%- include('partials/footer') %>

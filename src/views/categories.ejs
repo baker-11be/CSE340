@@ -21,19 +21,25 @@
                     <p class="eyebrow">Causes in your community</p>
                     <h2 id="category-results-title">Service project categories</h2>
                 </div>
-                <a class="text-link" href="/projects">Explore all projects <span aria-hidden="true">→</span></a>
+                <div>
+                    <a class="text-link" href="/new-category">Add a new category</a>
+                    <a class="text-link" href="/projects">Explore all projects <span aria-hidden="true">→</span></a>
+                </div>
             </div>
             <div class="category-grid">
                 <% if (categories.length > 0) { %>
                     <% categories.forEach((category, index) => { %>
-                        <a class="category-card" href="/category/<%= category.category_id %>">
-                            <span class="category-number <%= ['', 'category-number-orange', 'category-number-green', 'category-number-gold'][index % 4] %>" aria-hidden="true"><%= String(index + 1).padStart(2, '0') %></span>
-                            <span class="category-card-copy">
-                                <span class="category-card-title"><%= category.name %></span>
-                                <span class="category-card-description"><%= categoryDescriptions[category.name] || 'Explore local projects and find a meaningful way to contribute.' %></span>
-                                <span class="category-card-link">View related projects <span aria-hidden="true">→</span></span>
-                            </span>
-                        </a>
+                        <div class="category-card-wrapper">
+                            <a class="category-card" href="/category/<%= category.category_id %>">
+                                <span class="category-number <%= ['', 'category-number-orange', 'category-number-green', 'category-number-gold'][index % 4] %>" aria-hidden="true"><%= String(index + 1).padStart(2, '0') %></span>
+                                <span class="category-card-copy">
+                                    <span class="category-card-title"><%= category.name %></span>
+                                    <span class="category-card-description"><%= categoryDescriptions[category.name] || 'Explore local projects and find a meaningful way to contribute.' %></span>
+                                    <span class="category-card-link">View related projects <span aria-hidden="true">→</span></span>
+                                </span>
+                            </a>
+                            <a class="text-link" href="/edit-category/<%= category.category_id %>">Edit category</a>
+                        </div>
                     <% }); %>
                 <% } else { %>
                     <p>No service project categories are available right now.</p>

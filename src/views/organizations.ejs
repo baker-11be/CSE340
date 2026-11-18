@@ -20,7 +20,10 @@
                     <p class="eyebrow">Local community partners</p>
                     <h2 id="organization-results-title">Organizations making a difference</h2>
                 </div>
-                <p class="results-note"><%= organizations.length %> organizations</p>
+                <div class="results-actions">
+                    <p class="results-note"><%= organizations.length %> organizations</p>
+                    <a class="button button-primary" href="/new-organization">Add an organization</a>
+                </div>
             </div>
 
             <% if (organizations.length > 0) { %>

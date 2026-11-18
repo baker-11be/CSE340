@@ -41,3 +41,13 @@
             </span>
         </div>
     </header>
+    <% if (flash.error.length > 0 || flash.success.length > 0) { %>
+        <div class="flash-container content-width">
+            <% flash.error.forEach(message => { %>
+                <p class="flash-message flash-error" role="alert"><%= message %></p>
+            <% }); %>
+            <% flash.success.forEach(message => { %>
+                <p class="flash-message flash-success" role="status"><%= message %></p>
+            <% }); %>
+        </div>
+    <% } %>

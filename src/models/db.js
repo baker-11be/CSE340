@@ -60,6 +60,33 @@ const db = process.env.NODE_ENV === 'development' && process.env.ENABLE_SQL_LOGG
 
         close: async () => {
             await pool.end();
+        },
+
+        connect: async () => {
+            const client = await pool.connect();
+
+            return {
+                query: async (text, params) => {
+                    try {
+                        const start = Date.now();
+                        const res = await client.query(text, params);
+                        const duration = Date.now() - start;
+                        console.log('Executed query:', {
+                            text: text.replace(/\s+/g, ' ').trim(),
+                            duration: `${duration}ms`,
+                            rows: res.rowCount
+                        });
+                        return res;
+                    } catch (error) {
+                        console.error('Error in query:', {
+                            text: text.replace(/\s+/g, ' ').trim(),
+                            error: error.message
+                        });
+                        throw error;
+                    }
+                },
+                release: () => client.release()
+            };
         }
     }
     : pool;
